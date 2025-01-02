@@ -1,0 +1,33 @@
+-------------- Juniper MX Router - SPAN port -------------------
+1) definicja span portu
+
+forwarding-options {
+    analyzer {
+        SPAN {
+            input {
+                ingress {
+                    interface xe-0/1/0.0;
+                }                       
+                egress {
+                    interface xe-0/1/0.0;
+                }
+            }
+            output {
+                interface xe-0/1/4.0;
+            }
+        }
+    }
+}
+
+2) konfiguracja interfejscu output
+- Z Uwagi, że aby span port działał, interfejs musi być w trybie switchingu. Rutery nie mają takiego trybu więc można użyć trybu brifge, który jest dostępny i podłączyć "pusty" vlan pod niego.
+
+#show interfaces xe-0/1/4    
+description SPAN_port;
+speed 10g;
+unit 0 {
+    family bridge {
+        interface-mode access;
+        vlan-id 44;
+    }
+}
