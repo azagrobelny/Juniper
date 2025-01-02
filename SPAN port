@@ -1,4 +1,4 @@
--------------- Juniper MX Router - SPAN port -------------------
+-------------- Juniper MX Router - SPAN port - metoda 1 -------------------
 1) definicja span portu
 
 forwarding-options {
@@ -31,3 +31,9 @@ unit 0 {
         vlan-id 44;
     }
 }
+
+
+-------------- Juniper MX Router - SPAN port - metoda 2-------------------
+https://supportportal.juniper.net/s/article/MX-Example-Configuring-port-mirroring-on-MX-devices?language=en_US
+
+
