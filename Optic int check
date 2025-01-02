@@ -1,0 +1,27 @@
+# run show chassis hardware 
+--------------------------------
+
+Item             Version  Part number  Serial number     Description
+FPC 0                     BUILTIN      BUILTIN           MPC
+  PIC 0                   BUILTIN      BUILTIN           4XQSFP28 PIC
+  PIC 1                   BUILTIN      BUILTIN           8XSFPP PIC
+    Xcvr 0       REV 01   740-140352   1W1CT8A9352T     SFP+-10G-LR
+    Xcvr 1       NL-B2    NON-JNPR     ADF216260000GY   SFP+-10G-LR
+    Xcvr 2       REV 01   740-02130   NC3B2LC           SFP+-10G-SR
+    Xcvr 3       REV 01   740-02130   NC3DMXU           SFP+-10G-SR
+    Xcvr 4       m36      NON-JNPR     FNS2745119       SFP+-10G-SR
+PEM 0            REV 04   740-07074   1F18D16118       JPSU-650W-AC-AO
+PEM 1            REV 04   740-07074   1F18D16082       JPSU-650W-AC-AO
+
+#show chassis hardware extensive
+-----------------------------------
+
+# run show interfaces diagnostics optics          
+-----------------------------------
+Physical interface: xe-0/1/0
+    Laser bias current                        :  31.440 mA
+    Laser output power                        :  0.5410 mW / -2.67 dBm
+    Module temperature                        :  30 degrees C / 85 degrees F
+    Module voltage                            :  3.2820 V
+    Laser receiver power                      :  0.6120 mW / -2.13 dBm
+    ...
