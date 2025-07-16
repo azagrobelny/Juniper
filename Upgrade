@@ -5,5 +5,10 @@ Etap 1 Import pliku .tgz via SFTP
 
 Etap 2 Podmontowanie obrazu i upgrade
       2.0 user@switch> request system storage cleanup
+      2.1 user@switch> request vmhost software validate /var/tmp/jinstall-xxxx-xxx.tgz 
       2.1 user@switch> request vmhost software add /var/tmp/jinstall-xxxx-xxx.tgz 
       2.2 user@switch> request vmhost reboot
+
+Etap 3 Weryfikacja
+      2.1 user@switch> show version
+      2.1 user@switch> show chassis alarms
