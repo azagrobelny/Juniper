@@ -19,3 +19,7 @@ Etap 3 Podmontowanie obrazu i upgrade
 Etap 4 Weryfikacja
       2.1 user@switch> show version
       2.1 user@switch> show chassis alarms
+
+Etap 5 Rollback
+      2.0 user@host> show vmhost snapshot
+      2.1 user@host> request vmhost software rollback
