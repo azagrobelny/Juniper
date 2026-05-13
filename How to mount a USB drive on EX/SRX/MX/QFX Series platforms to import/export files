@@ -1,0 +1,95 @@
+This article explains how to mount a USB drive on EX/SRX/MX/QFX Series devices and copy files (images, configuration files, logs, and so on) to or from the devices via the USB drive.
+Solution
+
+The following procedure allows users to mount a USB device on EX/SRX/MX/QFX devices. This can be helpful if network connectivity is unavailable and you need to copy files to or from the device.
+
+Note: It is recommended to have a USB with the FAT32 format.
+
+    Enter the shell as the root user:
+
+        user@switch> start shell user root
+        Password:
+        root@switch% 
+
+    Before inserting the USB device, perform the following:
+
+        root@% ls /dev/da*
+        /dev/da0 /dev/da0s1c /dev/da0s2a /dev/da0s3 /dev/da0s3e
+        /dev/da0s1 /dev/da0s1f /dev/da0s2c /dev/da0s3c
+        /dev/da0s1a /dev/da0s2 /dev/da0s2f /dev/da0s3d
+
+    Insert the USB drive in the USB port. The following output will be displayed:
+
+        root@% umass1: TOSHIBA TransMemory, rev 2.00/1.00, addr 3
+        da2 at umass-sim1 bus 1 target 0 lun 0
+        da2: <TOSHIBA TransMemory 5.00> Removable Direct Access SCSI-0 device 
+        da2: 40.000MB/s transfers
+        da2: 983MB (2013184 512 byte sectors: 64H 32S/T 983C)
+
+        root@% ls /dev/da*
+        /dev/da0 /dev/da0s1c /dev/da0s2a /dev/da0s3 /dev/da0s3e
+        /dev/da0s1 /dev/da0s1f /dev/da0s2c /dev/da0s3c /dev/da2
+        /dev/da0s1a /dev/da0s2 /dev/da0s2f /dev/da0s3d /dev/da2s1
+
+        Note : " /dev/da2s1 " is the USB drive. If the console session is not available while inserting the USB, check the /var/log file named "messages" for logs related to "da" (for example, show log messages | match da ). The same four lines will be logged as is shown on the console if it is plugged live.
+
+    Create a directory for the USB drive to mount to:
+
+        root@% mkdir /var/tmp/usb
+
+    Mount the USB drive to the /var/tmp/usb directory:
+
+        root@% mount_msdosfs /dev/da2s1 /var/tmp/usb
+        root@% ls /var/tmp/usb
+        images.tgz
+        juniper.conf.1.gz
+
+        Note : " ls /var/tmp/usb " will show all the files in the USB drive.
+
+    If you encounter the mount_msdosfs: /dev/da0: Invalid argument or the mount_msdosfs: /dev/da0s1: Operation not permitted errors during this step, refer to Possible Issues While Mounting USBs .
+     
+
+    For QFX Series devices, use the following command to mount the USB:
+
+        root@% mount -t msdos /dev/da2s1 /var/tmp/usb
+        root@% ls /var/tmp/usb
+        images.tgz
+        juniper.conf.1.gz
+
+    Copy any of the USB files to the /var/tmp/usb directory:
+
+        root@% cp /var/tmp/usb/images.tgz /var/tmp
+        root@% ls /var/tmp
+        images.tgz
+
+        In this case, the images.tgz file from the USB is successfully copied to the /var/tmp directory.
+
+    Unmount the USB device after the file has been copied:
+
+        root@% umount /var/tmp/usb
+        root@% umass1: at uhub0 port 1 (addr 3) disconnected
+        (da1:umass-sim1:1:0:0): lost device
+        (da1:umass-sim1:1:0:0): removing device entry
+        umass1: detached
+
+    Note: ​Ensure that USB devices are unmounted properly before removing them from the router. For devices with multiple USBs, make sure that you unmount both devices.
+
+ 
+
+Possible Issues While Mounting USBs
+
+    If you are seeing the following error:
+
+        root@% mount_msdosfs /dev/da0s1 /mnt 
+        mount_msdosfs: /dev/da0: Invalid argument
+
+    Use another USB device with the FAT16 or FAT32 format. Newer USB 3.0 devices with large capacity use the exFAT format, and might not support the FAT32 format. Try using USB 2.0 devices with smaller capacity. 
+
+    If you are seeing the following error:
+
+        root% mount -t msdosfs /dev/da0s1 /mnt
+        mount_msdosfs: /dev/da0s1: Operation not permitted
+
+    You may be attempting to mount a partition that is already in use. To confirm, run " ls –l /dev/ ". If you find that you are using a partition that is already in use, select a different/correct partition.
+
+ 
