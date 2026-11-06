@@ -1,0 +1,5 @@
+# kopiowanie pliku z jednego Junipera na drugiego 
+> file copy /var/tmp/junos-vmhost-install-mx-x86-64-23.4R2-S8.13.tgz scp://user@adres_IP_destination/var/tmp/ routing-instance mgmt_junos
+
+# listowanie plików
+> file list /var/tmp
